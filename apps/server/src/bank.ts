@@ -6,16 +6,16 @@ const source: Record<string, string> = {
 Geography: `
 Name a country that borders Germany. | France, Poland, Netherlands~The Netherlands, Austria, Switzerland, Czechia~Czech Republic, Belgium, Denmark, Luxembourg
 Name a South American country. | Brazil, Argentina, Colombia, Chile, Peru, Venezuela, Ecuador, Bolivia, Uruguay, Paraguay, Guyana, Suriname
-Name a country whose flag contains a crescent. | Turkey~T�rkiye, Pakistan, Tunisia, Malaysia, Algeria, Azerbaijan, Singapore, Maldives~The Maldives, Mauritania, Uzbekistan, Turkmenistan, Comoros~The Comoros
+Name a country whose flag contains a crescent. | Turkey~Türkiye, Pakistan, Tunisia, Malaysia, Algeria, Azerbaijan, Singapore, Maldives~The Maldives, Mauritania, Uzbekistan, Turkmenistan, Comoros~The Comoros
 Name a national capital on the Danube. | Vienna, Budapest, Belgrade, Bratislava, Vienna Austria~Wien, Budapest Hungary, Belgrade Serbia, Bratislava Slovakia
 Name a sovereign country completely south of the equator. | Australia, New Zealand, South Africa, Argentina, Chile, Uruguay, Madagascar, Lesotho, Timor-Leste~East Timor, Eswatini~Swaziland, Namibia, Botswana
 Name an island in the Mediterranean Sea. | Sicily~Sicilia, Sardinia~Sardegna, Cyprus, Crete, Mallorca~Majorca, Corsica~Corse, Ibiza, Elba, Menorca~Minorca, Gozo, Hvar, Pantelleria
-Name a US state bordering the Pacific Ocean. | California, Alaska, Hawaii~Hawai?i, Oregon, Washington~Washington State
-Name a river that flows into the Mediterranean or one of its marginal seas. | Nile~Nile River, Rh�ne~Rhone River, Po~Po River, Ebro~Ebro River, Tiber~Tiber River, Adriatic Neretva~Neretva, Moulouya, Medjerda~Majardah, Aude, Arno
+Name a US state bordering the Pacific Ocean. | California, Alaska, Hawaii~Hawaiʻi, Oregon, Washington~Washington State
+Name a river that flows into the Mediterranean or one of its marginal seas. | Nile~Nile River, Rhône~Rhone River, Po~Po River, Ebro~Ebro River, Tiber~Tiber River, Adriatic Neretva~Neretva, Moulouya, Medjerda~Majardah, Aude, Arno
 Name an African country on the Indian Ocean or Mozambique Channel. | South Africa, Kenya, Somalia, Tanzania, Mozambique, Madagascar, Comoros, Mauritius, Seychelles
-Name a European city with a metro system, excluding national capitals. | Barcelona, Milan~Milano, Hamburg, Munich~M�nchen, Naples~Napoli, Porto~Oporto, Bilbao, Lille, Turin~Torino, Lausanne, Brescia, Nuremberg~N�rnberg
+Name a European city with a metro system, excluding national capitals. | Barcelona, Milan~Milano, Hamburg, Munich~München, Naples~Napoli, Porto~Oporto, Bilbao, Lille, Turin~Torino, Lausanne, Brescia, Nuremberg~Nürnberg
 Name a country with land inside the Arctic Circle. | Canada, Russia, United States~USA~US, Norway, Sweden, Finland, Denmark~Kingdom of Denmark, Iceland
-Name a Canadian province. | Ontario, Quebec~Qu�bec, British Columbia~BC, Alberta, Manitoba, Saskatchewan, Nova Scotia, New Brunswick, Prince Edward Island~PEI, Newfoundland and Labrador
+Name a Canadian province. | Ontario, Quebec~Québec, British Columbia~BC, Alberta, Manitoba, Saskatchewan, Nova Scotia, New Brunswick, Prince Edward Island~PEI, Newfoundland and Labrador
 Name an independent island nation in the Pacific Ocean. | Japan, New Zealand, Fiji, Samoa, Tonga, Vanuatu, Nauru, Tuvalu, Kiribati, Palau, Marshall Islands, Solomon Islands, Micronesia~Federated States of Micronesia
 Name a US state whose name has two words. | New York, New Jersey, North Carolina, South Carolina, New Mexico, West Virginia, New Hampshire, Rhode Island, North Dakota, South Dakota
 `,
@@ -49,11 +49,11 @@ Name a country that formed part of the 1955 Warsaw Pact at its signing. | Soviet
 `,
 Animals: `
 Name an animal that lives in the ocean. | Shark, Dolphin, Whale, Octopus, Jellyfish, Crab, Sea turtle, Lobster, Seahorse, Starfish~Sea star, Seal, Orca~Killer whale, Clownfish, Squid, Sea lion, Manatee, Hermit crab, Oyster, Blue tang~Regal tang, Manta ray, Cuttlefish, Sea cucumber, Sea urchin, Moray eel, Beluga, Nautilus, Giant isopod, Nudibranch, Oarfish, Hagfish, Siphonophore, Coelacanth, Vampire squid, Barreleye
-Name a kind of penguin. | Emperor penguin~Emperor, King penguin~King, Ad�lie penguin~Adelie, Gentoo penguin~Gentoo, Chinstrap penguin~Chinstrap, Macaroni penguin~Macaroni, Snares penguin, Erect-crested penguin, Fiordland penguin, Humboldt penguin, Gal�pagos penguin
-Name a non-penguin flightless bird. | Ostrich, Emu, Kiwi, Cassowary, Rhea, Kakapo~Kakapo, Takahe~Takahe, Weka, Flightless cormorant, Auckland teal
+Name a kind of penguin. | Emperor penguin~Emperor, King penguin~King, Adélie penguin~Adelie, Gentoo penguin~Gentoo, Chinstrap penguin~Chinstrap, Macaroni penguin~Macaroni, Snares penguin, Erect-crested penguin, Fiordland penguin, Humboldt penguin, Galápagos penguin
+Name a non-penguin flightless bird. | Ostrich, Emu, Kiwi, Cassowary, Rhea, Kakapo~Kākāpō, Takahe~Takahē, Weka, Flightless cormorant, Auckland teal
 Name a living feline species. | Lion, Tiger, Domestic cat~Cat, Cheetah, Leopard, Jaguar, Ocelot, Caracal, Serval, Pallas's cat~Manul, Margay, Sand cat, Fishing cat
 Name a kind of bear alive today. | Polar bear~Polar, Brown bear~Grizzly~Grizzly bear, American black bear, Giant panda~Panda, Sloth bear, Sun bear, Spectacled bear~Andean bear, Asian black bear~Asiatic black bear
-Name a member of the deer family. | Moose~Elk in Europe, Red deer, Reindeer~Caribou, White-tailed deer, Mule deer, Fallow deer, Muntjac, Pudu, P�re David's deer, Chital~Axis deer, Sambar
+Name a member of the deer family. | Moose~Elk in Europe, Red deer, Reindeer~Caribou, White-tailed deer, Mule deer, Fallow deer, Muntjac, Pudu, Père David's deer, Chital~Axis deer, Sambar
 Name an Australian marsupial. | Kangaroo, Koala, Wombat, Wallaby, Tasmanian devil, Quokka, Numbat, Bilby, Quoll, Dunnart, Cuscus, Kultarr
 Name a venomous snake. | Cobra, Rattlesnake, Black mamba~Mamba, Viper, Coral snake, Inland taipan~Taipan, Boomslang, Fer-de-lance, Gaboon viper, Tiger snake, Krait, Puff adder
 Name a member of the crow family. | Crow, Raven, Magpie, Jay, Jackdaw, Rook, Nutcracker, Chough, Treepie, Stresemann's bushcrow
@@ -63,7 +63,7 @@ Name an animal with eight legs as an adult. | Spider, Scorpion, Tick, Mite, Harv
 `,
 Movies: `
 Name an actor who played James Bond in an official Eon film. | Daniel Craig~Craig, Sean Connery~Connery, Pierce Brosnan~Brosnan, Roger Moore~Moore, Timothy Dalton~Dalton, George Lazenby~Lazenby
-Name a feature film directed by Hayao Miyazaki. | Spirited Away, My Neighbor Totoro~My Neighbour Totoro~Totoro, Princess Mononoke, Howl's Moving Castle, Kiki's Delivery Service, Ponyo, The Boy and the Heron, The Wind Rises, Porco Rosso, Castle in the Sky~Laputa, Nausica� of the Valley of the Wind~Nausicaa, The Castle of Cagliostro
+Name a feature film directed by Hayao Miyazaki. | Spirited Away, My Neighbor Totoro~My Neighbour Totoro~Totoro, Princess Mononoke, Howl's Moving Castle, Kiki's Delivery Service, Ponyo, The Boy and the Heron, The Wind Rises, Porco Rosso, Castle in the Sky~Laputa, Nausicaä of the Valley of the Wind~Nausicaa, The Castle of Cagliostro
 Name a film Steven Spielberg directed that was released in the 1980s. | E.T. the Extra-Terrestrial~ET, Raiders of the Lost Ark~Raiders, Indiana Jones and the Last Crusade~The Last Crusade, Indiana Jones and the Temple of Doom~Temple of Doom, The Color Purple, Empire of the Sun, Always, 1941~Nineteen Forty One
 Name a feature film by the Coen brothers. | Fargo, The Big Lebowski~Big Lebowski, No Country for Old Men, True Grit, O Brother Where Art Thou, Raising Arizona, Burn After Reading, Inside Llewyn Davis, Barton Fink, Miller's Crossing, Blood Simple, The Hudsucker Proxy, A Serious Man
 Name a film in the main Star Wars Skywalker Saga by its subtitle. | A New Hope~Episode IV, The Empire Strikes Back~Episode V, Return of the Jedi~Episode VI, The Phantom Menace~Episode I, Revenge of the Sith~Episode III, Attack of the Clones~Episode II, The Force Awakens~Episode VII, The Last Jedi~Episode VIII, The Rise of Skywalker~Episode IX
@@ -80,13 +80,13 @@ Name a country that has won the men's FIFA World Cup. | Brazil, Argentina, Germa
 Name an original team from the NHL Original Six era. | Toronto Maple Leafs~Maple Leafs, Montreal Canadiens~Canadiens, Boston Bruins~Bruins, New York Rangers~Rangers, Detroit Red Wings~Red Wings, Chicago Blackhawks~Blackhawks~Black Hawks
 Name a Grand Slam singles tournament venue in tennis by tournament name. | Wimbledon~The Championships, US Open~U.S. Open, French Open~Roland Garros, Australian Open
 Name a men's Summer Olympics host city from 1980 through 2024. | London, Paris, Beijing, Tokyo, Los Angeles~LA, Athens, Sydney, Rio de Janeiro~Rio, Barcelona, Atlanta, Seoul, Moscow
-Name a Formula One World Drivers' Champion from 2000 through 2024. | Lewis Hamilton~Hamilton, Michael Schumacher~Schumacher, Max Verstappen~Verstappen, Sebastian Vettel~Vettel, Fernando Alonso~Alonso, Jenson Button~Button, Kimi R�ikk�nen~Raikkonen, Nico Rosberg~Rosberg
+Name a Formula One World Drivers' Champion from 2000 through 2024. | Lewis Hamilton~Hamilton, Michael Schumacher~Schumacher, Max Verstappen~Verstappen, Sebastian Vettel~Vettel, Fernando Alonso~Alonso, Jenson Button~Button, Kimi Räikkönen~Raikkonen, Nico Rosberg~Rosberg
 Name a current MLB team from the American League East. | New York Yankees~Yankees, Boston Red Sox~Red Sox, Toronto Blue Jays~Blue Jays, Baltimore Orioles~Orioles, Tampa Bay Rays~Rays
 Name an event in the Olympic decathlon. | 100 metres~100m, Long jump, High jump, Shot put, 400 metres~400m, Pole vault, Discus throw~Discus, Javelin throw~Javelin, 110 metre hurdles~110m hurdles, 1500 metres~1500m
 Name a national team that has won the men's Rugby Union World Cup through 2023. | New Zealand~All Blacks, South Africa~Springboks, Australia~Wallabies, England
 Name a WNBA team active in the 2025 season. | New York Liberty~Liberty, Las Vegas Aces~Aces, Indiana Fever~Fever, Seattle Storm~Storm, Chicago Sky~Sky, Phoenix Mercury~Mercury, Los Angeles Sparks~Sparks, Minnesota Lynx~Lynx, Atlanta Dream~Dream, Connecticut Sun~Sun, Dallas Wings~Wings, Washington Mystics~Mystics, Golden State Valkyries~Valkyries
 Name an event in women's artistic gymnastics. | Floor exercise~Floor, Balance beam~Beam, Vault, Uneven bars~Asymmetric bars
-Name a winner of the men's Tour de France general classification since 2000, excluding stripped titles. | Tadej Pogacar~Pogacar, Jonas Vingegaard~Vingegaard, Chris Froome~Froome, Alberto Contador~Contador, Egan Bernal~Bernal, Geraint Thomas~Thomas, Bradley Wiggins~Wiggins, Cadel Evans~Evans, Vincenzo Nibali~Nibali, Carlos Sastre~Sastre, Andy Schleck~Schleck, Oscar Pereiro~Pereiro
+Name a winner of the men's Tour de France general classification since 2000, excluding stripped titles. | Tadej Pogačar~Pogacar, Jonas Vingegaard~Vingegaard, Chris Froome~Froome, Alberto Contador~Contador, Egan Bernal~Bernal, Geraint Thomas~Thomas, Bradley Wiggins~Wiggins, Cadel Evans~Evans, Vincenzo Nibali~Nibali, Carlos Sastre~Sastre, Andy Schleck~Schleck, Óscar Pereiro~Pereiro
 Name a current NBA team in the Northwest Division. | Denver Nuggets~Nuggets, Oklahoma City Thunder~Thunder~OKC, Minnesota Timberwolves~Timberwolves, Portland Trail Blazers~Trail Blazers~Blazers, Utah Jazz~Jazz
 `,
 Language: `
@@ -121,21 +121,21 @@ Food: `
 Name an Italian pasta shape. | Spaghetti, Penne, Fusilli, Farfalle~Bow ties, Rigatoni, Orecchiette, Cavatappi, Pappardelle, Trofie, Strozzapreti, Fregola, Mafaldine, Cavatelli, Casarecce
 Name an edible mushroom. | Button mushroom~Champignon, Portobello~Portabella, Shiitake, Oyster mushroom, Morel, Chanterelle, Enoki~Enokitake, Lion's mane, Maitake~Hen of the woods, Porcini~Cep, Matsutake, Black trumpet, Wood ear
 Name a kind of citrus fruit. | Orange, Lemon, Lime, Grapefruit, Tangerine, Mandarin, Clementine, Kumquat, Pomelo, Yuzu, Calamansi~Calamondin, Sudachi, Finger lime
-Name a French cheese. | Brie, Camembert, Roquefort, Comt�, Beaufort, Reblochon, Morbier, �poisses, Cantal, Livarot, Pont-l'�v�que, Bleu d'Auvergne, Fourme d'Ambert
+Name a French cheese. | Brie, Camembert, Roquefort, Comté, Beaufort, Reblochon, Morbier, Époisses, Cantal, Livarot, Pont-l'Évêque, Bleu d'Auvergne, Fourme d'Ambert
 Name an ingredient in a masala chai spice blend. | Ginger, Cardamom, Cinnamon, Clove~Cloves, Black pepper~Peppercorn, Star anise, Fennel~Fennel seed, Nutmeg, Allspice
 Name an edible dry pulse in the bean or pea family. | Lentil, Chickpea~Garbanzo bean, Kidney bean, Black bean, Split pea, Navy bean, Adzuki~Azuki bean, Mung bean, Pigeon pea, Cowpea~Black-eyed pea, Lupin~Lupini bean, Bambara groundnut
-Name a Japanese noodle. | Ramen, Udon, Soba, Somen~Somen, Yakisoba, Hiyamugi, Shirataki, Harusame, Kishimen, Hoto, Soki soba
-Name a classic French mother sauce in the modern Escoffier grouping. | B�chamel~Bechamel, Hollandaise, Velout�~Veloute, Espagnole, Sauce tomate~Tomato sauce
+Name a Japanese noodle. | Ramen, Udon, Soba, Sōmen~Somen, Yakisoba, Hiyamugi, Shirataki, Harusame, Kishimen, Hōtō, Soki soba
+Name a classic French mother sauce in the modern Escoffier grouping. | Béchamel~Bechamel, Hollandaise, Velouté~Veloute, Espagnole, Sauce tomate~Tomato sauce
 Name a cultivar or variety of apple. | Granny Smith, Gala, Fuji, Honeycrisp, Pink Lady~Cripps Pink, Red Delicious, Braeburn, Cortland, Jonathan, Cox's Orange Pippin, Ashmead's Kernel, Gravenstein, Northern Spy, Arkansas Black
 Name an edible seed or nut commonly used in a trail mix. | Peanut, Almond, Cashew, Walnut, Pecan, Pistachio, Pumpkin seed~Pepita, Sunflower seed, Brazil nut, Hazelnut~Filbert, Macadamia, Pine nut
 Name a dish associated with Korean cuisine. | Kimchi, Bibimbap, Bulgogi, Tteokbokki~Topokki, Japchae, Kimbap~Gimbap, Samgyeopsal, Sundubu-jjigae, Naengmyeon, Doenjang-jjigae, Bossam, Jjimdak
-Name an ingredient traditionally found in a standard b�nh m� th?t. | Baguette~Bread, Pork~Roast pork, Cucumber, Cilantro~Coriander leaf, Pickled carrot~Carrot, Daikon~Pickled daikon, P�t�~Pate, Mayonnaise~Mayo, Ch? l?a~Vietnamese pork sausage, Maggi seasoning~Maggi, Chili~Chilli
+Name an ingredient traditionally found in a standard bánh mì thịt. | Baguette~Bread, Pork~Roast pork, Cucumber, Cilantro~Coriander leaf, Pickled carrot~Carrot, Daikon~Pickled daikon, Pâté~Pate, Mayonnaise~Mayo, Chả lụa~Vietnamese pork sausage, Maggi seasoning~Maggi, Chili~Chilli
 `,
 Nature: `
 Name a genus or common kind of conifer. | Pine~Pinus, Spruce~Picea, Fir~Abies, Cedar~Cedrus, Juniper~Juniperus, Larch~Larix, Hemlock~Tsuga, Redwood~Sequoia, Yew~Taxus, Araucaria, Wollemi pine~Wollemia, Kauri~Agathis
 Name a kind of cloud in the ten basic weather cloud genera. | Cumulus, Cumulonimbus, Stratus, Cirrus, Nimbus stratus~Nimbostratus, Stratocumulus, Altocumulus, Altostratus, Cirrostratus, Cirrocumulus
 Name a mountain over 8,000 metres above sea level. | Everest~Mount Everest~Chomolungma, K2~Godwin Austen, Annapurna I~Annapurna, Lhotse, Makalu, Manaslu, Dhaulagiri I~Dhaulagiri, Nanga Parbat, Cho Oyu, Kangchenjunga~Kanchenjunga, Gasherbrum I, Gasherbrum II, Broad Peak, Shishapangma
-Name a named desert in Asia. | Gobi~Gobi Desert, Arabian Desert, Thar~Thar Desert, Taklamakan~Taklamakan Desert, Karakum~Karakum Desert, Kyzylkum~Kyzylkum Desert, Dasht-e Kavir~Great Salt Desert, Dasht-e Lut~Lut Desert, Ordos Desert, Badain Jaran, Gurbant�ngg�t
+Name a named desert in Asia. | Gobi~Gobi Desert, Arabian Desert, Thar~Thar Desert, Taklamakan~Taklamakan Desert, Karakum~Karakum Desert, Kyzylkum~Kyzylkum Desert, Dasht-e Kavir~Great Salt Desert, Dasht-e Lut~Lut Desert, Ordos Desert, Badain Jaran, Gurbantünggüt
 Name a plant known for trapping insects. | Venus flytrap, Pitcher plant, Sundew~Drosera, Bladderwort~Utricularia, Butterwort~Pinguicula, Cobra lily~Darlingtonia, Waterwheel plant~Aldrovanda, Corkscrew plant~Genlisea, Rainbow plant~Byblis, Portuguese sundew~Drosophyllum
 Name an active or historically active volcano in Italy. | Vesuvius~Mount Vesuvius, Etna~Mount Etna, Stromboli, Vulcano, Campi Flegrei~Phlegraean Fields, Ischia, Pantelleria, Lipari, Marsili
 Name a biome or vegetation zone with notably cold conditions. | Tundra, Taiga~Boreal forest, Alpine tundra, Polar desert~Ice desert, Polar ice cap, Subalpine forest, Arctic desert, Antarctic tundra
@@ -178,8 +178,8 @@ Name an instrument in a standard orchestral woodwind section. | Flute, Clarinet,
 Name a note in the C major scale, using letter names. | C, D, E, F, G, A, B
 Name an official UK studio album by the Beatles. | Abbey Road, Let It Be, Revolver, Rubber Soul, Sgt Pepper's Lonely Hearts Club Band~Sgt Pepper, Help, A Hard Day's Night, The Beatles~White Album, Please Please Me, With the Beatles, Beatles for Sale, Yellow Submarine
 Name a basic percussion instrument played with a stick or mallet. | Snare drum~Snare, Xylophone, Timpani~Kettledrums, Triangle, Marimba, Glockenspiel, Vibraphone, Tubular bells, Wood block, Temple block, Crotales, Tam-tam~Gong
-Name a composer from the Baroque era. | Johann Sebastian Bach~Bach~J S Bach, Antonio Vivaldi~Vivaldi, George Frideric Handel~Handel, Johann Pachelbel~Pachelbel, Henry Purcell~Purcell, Arcangelo Corelli~Corelli, Claudio Monteverdi~Monteverdi, Domenico Scarlatti~Scarlatti, Fran�ois Couperin~Couperin, Jean-Philippe Rameau~Rameau, Barbara Strozzi~Strozzi, �lisabeth Jacquet de La Guerre
-Name a fretted string instrument. | Guitar, Ukulele~Uke, Banjo, Mandolin, Bass guitar~Electric bass, Sitar, Balalaika, Bouzouki, Lute, Charango, Appalachian dulcimer~Mountain dulcimer, Baglama~Saz
+Name a composer from the Baroque era. | Johann Sebastian Bach~Bach~J S Bach, Antonio Vivaldi~Vivaldi, George Frideric Handel~Handel, Johann Pachelbel~Pachelbel, Henry Purcell~Purcell, Arcangelo Corelli~Corelli, Claudio Monteverdi~Monteverdi, Domenico Scarlatti~Scarlatti, François Couperin~Couperin, Jean-Philippe Rameau~Rameau, Barbara Strozzi~Strozzi, Élisabeth Jacquet de La Guerre
+Name a fretted string instrument. | Guitar, Ukulele~Uke, Banjo, Mandolin, Bass guitar~Electric bass, Sitar, Balalaika, Bouzouki, Lute, Charango, Appalachian dulcimer~Mountain dulcimer, Bağlama~Saz
 Name a standard member of the bowed violin family. | Violin, Viola, Cello~Violoncello, Double bass~Contrabass
 Name a standard mode of the diatonic major scale. | Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian
 Name a musical term that indicates a tempo. | Allegro, Adagio, Andante, Presto, Largo, Moderato, Lento, Vivace, Grave, Prestissimo, Larghetto, Andantino, Allegretto
@@ -193,8 +193,8 @@ Name an instrument with piano-style keys. | Piano, Synthesizer~Synth, Pipe organ
 // Amendments preserve the published row IDs. Equivalent answers share one canonical key.
 const amendments: Record<string, string> = {
   'geography-4': 'Name a national capital on the Danube. | Vienna~Wien~Vienna Austria, Budapest~Budapest Hungary, Belgrade~Belgrade Serbia, Bratislava~Bratislava Slovakia',
-  'geography-8': 'Name a river that flows into the Mediterranean or one of its marginal seas. | Nile~Nile River, Rh�ne~Rhone River, Po~Po River, Ebro~Ebro River, Tiber~Tiber River, Neretva, Moulouya, Medjerda~Majardah, Aude, Arno',
-  'science-11': 'Name a metal that is ferromagnetic in elemental form at 0�C. | Iron~Fe, Nickel~Ni, Cobalt~Co, Gadolinium~Gd',
+  'geography-8': 'Name a river that flows into the Mediterranean or one of its marginal seas. | Nile~Nile River, Rhône~Rhone River, Po~Po River, Ebro~Ebro River, Tiber~Tiber River, Neretva, Moulouya, Medjerda~Majardah, Aude, Arno',
+  'science-11': 'Name a metal that is ferromagnetic in elemental form at 0°C. | Iron~Fe, Nickel~Ni, Cobalt~Co, Gadolinium~Gd',
   'movies-3': 'Name a film Steven Spielberg directed that was released in the 1980s. | E.T. the Extra-Terrestrial~ET~E.T., Raiders of the Lost Ark~Raiders, Indiana Jones and the Last Crusade~The Last Crusade, Indiana Jones and the Temple of Doom~Temple of Doom, The Color Purple, Empire of the Sun, Always',
   'sports-4': 'Name a Summer Olympics host city from 1980 through 2024. | London, Paris, Beijing, Tokyo, Los Angeles~LA, Athens, Sydney, Rio de Janeiro~Rio, Barcelona, Atlanta, Seoul, Moscow',
   'language-1': 'Name an English word that ends in the letters -ough. | Through, Though, Tough, Cough, Rough, Enough, Bough, Dough, Sough, Slough, Chough, Plough',

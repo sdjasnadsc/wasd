@@ -177,7 +177,7 @@ async function route(scroll = false) {
 }
 async function init() {
   try { setBootstrap(await api('/bootstrap')); state.bootError = ''; }
-  catch (err) { state.bootError = 'Couldn't connect to Reef Relay. ' + err.message; }
+  catch (err) { state.bootError = 'Couldn’t connect to Reef Relay. ' + err.message; }
   await route();
 }
 function setDive(dive, focus = false) {

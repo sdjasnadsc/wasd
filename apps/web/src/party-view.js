@@ -6,15 +6,15 @@ export function partyView(state) {
   if (!state.boot) return '';
   if (state.room) return roomView(state);
   const profile = state.boot.profile;
-  const connection = state.online ? tag('Connected', 'mint') : tag('Connecting.');
+  const connection = state.online ? tag('Connected', 'mint') : tag('Connecting…');
   return '<header class="relay-heading"><div><h1>Puffer Relay</h1><p>Pass the puffer with an unused answer. When it pops, the holder loses a heart.</p>' +
     href('/faq', 'How to play', 'inline-link', 'help') + '</div><div class="relay-buoy" aria-hidden="true">' + puffer('party-intro-fish') + '</div></header>' +
     '<div class="columns party-grid">' + box('<div class="section-head compact"><h2>Your diver</h2>' + connection + '</div>' +
-    '<div class="party-identity">' + avatar(profile.avatar) + '<div><strong>' + esc(profile.name) + '</strong><p>' + (profile.registered ? 'Account diver' : 'Guest diver') + ' � ' + n(profile.rating) + ' rating</p></div></div>' +
+    '<div class="party-identity">' + avatar(profile.avatar) + '<div><strong>' + esc(profile.name) + '</strong><p>' + (profile.registered ? 'Account diver' : 'Guest diver') + ' · ' + n(profile.rating) + ' rating</p></div></div>' +
     '<form data-form="party-name"><label for="party-name">Display name</label><div class="input-row"><input id="party-name" name="name" value="' + esc(profile.name) + '" minlength="3" maxlength="24" required data-preserve />' +
     submit('Save', 'secondary') + '</div>' + error() + '</form>' + companionPicker(profile)) +
     box('<h2>Matchmaking</h2><p>Choose a table size. Rated games match you with players near your rating.</p><div class="segment" role="group" aria-label="Table size">' +
-      [['2', '1v1'],['3','3 players'],['4-6','4-6 players'],['8-10','8-10 players']].map(([key, label]) => btn('queue-size', label, state.queueSize === key ? 'selected' : '', '', 'data-size="' + key + '" aria-pressed="' + (state.queueSize === key) + '"')).join('') +
+      [['2', '1v1'],['3','3 players'],['4-6','4–6 players'],['8-10','8–10 players']].map(([key, label]) => btn('queue-size', label, state.queueSize === key ? 'selected' : '', '', 'data-size="' + key + '" aria-pressed="' + (state.queueSize === key) + '"')).join('') +
       '</div>' + (state.queue ? '<div class="queue-status"><span class="spinner"></span><div><strong>Finding ' + (state.queue.rated ? 'a rated' : 'a quick') + ' match</strong><p>' + state.queue.waiting + ' in this queue</p></div>' + btn('queue-cancel', 'Cancel', 'secondary small') + '</div>' :
       '<div class="button-row">' + btn('queue-quick', 'Quick Play', 'primary', 'play', state.online ? '' : 'disabled') +
       btn('queue-rated', 'Rated', 'secondary', 'trophy', state.online ? '' : 'disabled') + '</div>')) + '</div>' +
@@ -28,7 +28,7 @@ export function partyView(state) {
     state.rooms.map(room => '<tr><td><strong>' + esc(room.name) + '</strong></td><td class="mono">' + esc(room.code) + '</td><td>' + esc(room.host) + '</td><td>' + room.count + ' / ' + room.capacity +
       '</td><td>' + tag(room.status === 'lobby' ? room.joinable ? 'Lobby' : 'Full' : room.status === 'playing' ? 'Playing' : 'Finished', room.joinable ? 'mint' : '') +
       '</td><td>' + btn('join-listed', 'Join', 'secondary small', '', 'data-code="' + esc(room.code) + '"' + (room.joinable ? '' : ' disabled')) + '</td></tr>').join('') + '</tbody></table></div>' :
-    empty(state.online ? 'No public rooms yet' : 'Looking for rooms.', state.online ? 'Open a room or share a code with a friend.' : 'Room listings appear when you connect.', 'party')), 'rooms-panel');
+    empty(state.online ? 'No public rooms yet' : 'Looking for rooms…', state.online ? 'Open a room or share a code with a friend.' : 'Room listings appear when you connect.', 'party')), 'rooms-panel');
 }
 function companionPicker(profile) {
   const buttons = AVATARS.filter(item => profile.unlocked.includes(item.id)).map(item =>
@@ -55,19 +55,19 @@ function roomView(state) {
   const inMatch = room.status === 'playing';
   return '<div class="room-top"><div class="room-title">' + tag(room.code, 'mint') + (room.rated ? tag('Rated', 'gold') : '') + '<h1>' + esc(room.settings.name) + '</h1></div><div class="button-row">' +
     btn('party-invite', 'Copy invitation', 'secondary', 'copy') + btn('leave', 'Leave room', 'secondary', 'exit') + '</div></div>' +
-    (!state.online ? '<p class="notice" role="status">Connection interrupted. Reconnecting to your room.</p>' : '') +
+    (!state.online ? '<p class="notice" role="status">Connection interrupted. Reconnecting to your room…</p>' : '') +
     (inMatch ? relayArena(room, state, me, holder, mine) :
     '<div class="columns room-grid">' +
     (
     room.status === 'finished' ?
       box(puffer() + tag('MATCH COMPLETE', 'gold') + '<h2>' + esc(winner?.name ?? 'The last diver') + ' wins!</h2><p>' + (room.rated && me?.ratingChange != null ?
-        'Rating ' + (me.ratingChange >= 0 ? '+' : '') + me.ratingChange + ' � Now ' + n(me.rating) : 'The last diver with a heart takes the match.') + '</p><div class="button-row">' +
+        'Rating ' + (me.ratingChange >= 0 ? '+' : '') + me.ratingChange + ' · Now ' + n(me.rating) : 'The last diver with a heart takes the match.') + '</p><div class="button-row">' +
         (host && !room.rated ? btn('rematch', 'Play again', 'primary', 'refresh') : '') + btn('leave', 'Return to lobby', 'secondary', 'exit') + '</div>', 'winner-panel') :
       box(puffer() + tag('WAITING ROOM', 'gold') + '<h2>Get ready to pass</h2><p>Share code <strong class="mono">' + esc(room.code) + '</strong> with your crew. ' +
         (host ? 'Everyone else must be ready before you start.' : 'Mark yourself ready and wait for the host.') + '</p><div class="button-row">' +
         (host ? btn('game-start', 'Start game', 'primary', 'play', room.players.length > 1 && room.players.every(player => player.connected && (player.ready || player.id === room.hostId)) ? '' : 'disabled') :
-          btn('ready', me?.ready ? 'Set as not ready' : 'I'm ready', me?.ready ? 'secondary' : 'primary', 'check', 'data-ready="' + !me?.ready + '"')) + '</div>' +
-        '<p class="subtle">' + room.settings.startingHearts + ' starting hearts � ' + n(room.settings.heartPoints) + ' pts per extra heart</p>' + error(state.error), 'waiting-panel')) +
+          btn('ready', me?.ready ? 'Set as not ready' : 'I’m ready', me?.ready ? 'secondary' : 'primary', 'check', 'data-ready="' + !me?.ready + '"')) + '</div>' +
+        '<p class="subtle">' + room.settings.startingHearts + ' starting hearts · ' + n(room.settings.heartPoints) + ' pts per extra heart</p>' + error(state.error), 'waiting-panel')) +
     box('<div class="section-head compact"><h2>Players</h2>' + tag(room.players.length + ' / ' + room.settings.capacity) + '</div><div class="roster">' +
       room.players.map(player => rosterCard(player, room, me?.id)).join('') + '</div>') + '</div>') +
     (inMatch ? box('<h2>Used answers</h2>' + (room.answers.length ? '<ul class="used-answers">' + room.answers.slice().reverse().map(answer => '<li><div><strong>' + esc(answer.answer) +
@@ -113,14 +113,14 @@ function seatPoint(index, count) {
 
 function relaySeat(player, room, ownId, answer, [x, y]) {
   const active = player.id === room.holderId;
-  const lastAnswer = answer ? '<span class="relay-answer rarity-' + TIER_NAMES.indexOf(answer.tier) + '" title="' + esc(rarityName(answer.tier) + ' � ' + answer.answer) + '">' +
+  const lastAnswer = answer ? '<span class="relay-answer rarity-' + TIER_NAMES.indexOf(answer.tier) + '" title="' + esc(rarityName(answer.tier) + ' · ' + answer.answer) + '">' +
     esc(answer.answer) + '</span>' : '';
   const maxPips = Math.max(room.settings.startingHearts, player.hearts);
   const hearts = Array.from({ length: maxPips }, (_, index) =>
     '<i class="' + (index < player.hearts ? 'full' : '') + '">' + icon('heart', 13) + '</i>').join('');
   return '<li class="relay-seat' + (active ? ' holding' : '') + (player.hearts ? '' : ' out') + '" style="--seat-x:' + x + '%;--seat-y:' + y + '%" ' +
     (active ? 'aria-current="true"' : '') + '>' + lastAnswer + '<div class="seat-badge">' + avatar(player.avatar) + '</div>' +
-    '<strong title="' + esc(player.name) + '">' + esc(player.name) + (player.id === ownId ? '<small> � You</small>' : '') + '</strong>' +
+    '<strong title="' + esc(player.name) + '">' + esc(player.name) + (player.id === ownId ? '<small> · You</small>' : '') + '</strong>' +
     '<span class="relay-hearts" role="img" aria-label="' + player.hearts + ' hearts">' + hearts + '</span>' +
     '<span class="relay-charge" role="meter" aria-label="Progress toward an extra heart" aria-valuemin="0" aria-valuemax="' + room.settings.heartPoints +
     '" aria-valuenow="' + Math.min(player.progress, room.settings.heartPoints) + '"><i style="width:' +

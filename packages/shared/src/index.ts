@@ -3,7 +3,7 @@ export const TIERS = {
 } as const;
 export type RarityTier = keyof typeof TIERS;
 export const TIER_NAMES = Object.keys(TIERS) as RarityTier[];
-export const TIER_ICONS = ['??', '??', '??', '??', '??', '??'];
+export const TIER_ICONS = ['🟦', '🟩', '🟨', '🟧', '🟪', '🟥'];
 export const ROUND_COUNT = 7;
 export const ROUND_MS = 25_000;
 export const MAX_SCORE = 700;
@@ -128,7 +128,7 @@ export interface PartyServerEvents {
 
 export function normalizeAnswer(value: string) {
   return value.normalize('NFKD').toLowerCase().replace(/\p{M}/gu, '')
-    .replace(/\+/g, ' plus ').replace(/#/g, ' sharp ').replace(/['`'`]/g, '').replace(/[.](?=\p{L})/gu, '').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+    .replace(/\+/g, ' plus ').replace(/#/g, ' sharp ').replace(/[’‘'`]/g, '').replace(/[.](?=\p{L})/gu, '').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
 }
 function editDistance(a: string, b: string): number {
   const rows = Array.from({ length: a.length + 1 }, (_, i) => [i]);

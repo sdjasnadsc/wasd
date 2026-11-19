@@ -18,7 +18,7 @@ export function diveView(state) {
   const progress = Array.from({ length: ROUND_COUNT }, (_, index) => {
     const row = dive.responses[index];
     const active = index + 1 === dive.current;
-    const label = 'Round ' + (index + 1) + (row ? ' � ' + row.points + ' points' : active ? ' � current' : ' � upcoming');
+    const label = 'Round ' + (index + 1) + (row ? ' · ' + row.points + ' points' : active ? ' · current' : ' · upcoming');
     return '<li class="' + tile(row) + (row ? ' recorded' : '') + (active ? ' at-round' : '') + '" title="' + label + '" aria-label="' + label + '">' + (index + 1) + '</li>';
   }).join('');
   return '<div class="dive-navigation">' + href(url, text, 'back-link', 'left') +
@@ -53,8 +53,8 @@ function roundReveal(row, state) {
 }
 
 export function shareResult(dive) {
-  const tiles = dive.responses.map(row => row.tier ? TIER_ICONS[TIER_NAMES.indexOf(row.tier)] : '?').join('');
-  return 'Reef Relay � ' + dive.label + '\n' + n(dive.score) + '/' + MAX_SCORE + ' � ' + n(dive.score * METERS_PER_POINT) + ' m\n' + tiles;
+  const tiles = dive.responses.map(row => row.tier ? TIER_ICONS[TIER_NAMES.indexOf(row.tier)] : '⬛').join('');
+  return 'Reef Relay · ' + dive.label + '\n' + n(dive.score) + '/' + MAX_SCORE + ' · ' + n(dive.score * METERS_PER_POINT) + ' m\n' + tiles;
 }
 
 function result(state) {
@@ -63,10 +63,10 @@ function result(state) {
   const profile = state.boot?.profile;
   const [url, label] = backHome(dive);
   const best = details?.previousBest;
-  const previous = best == null ? 'First completed run' : dive.score > best ? 'New personal best � +' + (dive.score - best) + ' pts' : dive.score === best ? 'Matched your personal best' : 'Personal best � ' + best + ' pts';
+  const previous = best == null ? 'First completed run' : dive.score > best ? 'New personal best · +' + (dive.score - best) + ' pts' : dive.score === best ? 'Matched your personal best' : 'Personal best · ' + best + ' pts';
   return href(url, label, 'back-link', 'left') +
     '<section class="result-hero"><div class="result-decoration"></div><div class="result-main">' + tag(dive.label, 'mint') + '<h1 id="dive-complete" tabindex="-1">Dive complete</h1>' +
-    '<div class="result-depth">' + n(dive.score * METERS_PER_POINT) + '<small> m</small></div><p><strong>' + dive.score + '</strong> / ' + MAX_SCORE + ' points � ' + esc(details ? previous : 'Checking personal best.') +
+    '<div class="result-depth">' + n(dive.score * METERS_PER_POINT) + '<small> m</small></div><p><strong>' + dive.score + '</strong> / ' + MAX_SCORE + ' points · ' + esc(details ? previous : 'Checking personal best…') +
     '</p><div class="tile-row" aria-label="Rarity by question">' + dive.responses.map(row => '<i class="' + tile(row) + '" title="' + rarityName(row.tier) + '"></i>').join('') +
     '</div></div><img src="/public/sub.svg" alt="" /></section>' +
     '<div class="result-toolbar">' + btn('copy-result', 'Copy results', 'primary', 'copy') + btn('share-result', 'Share', 'secondary', 'share') +
@@ -88,19 +88,19 @@ function depthLog(dive) {
 }
 
 function scoreDistribution(score, details) {
-  const title = '<h2>Today's scores</h2>';
-  if (!details) return box(title + '<p>Loading completed dives.</p>');
+  const title = '<h2>Today’s scores</h2>';
+  if (!details) return box(title + '<p>Loading completed dives…</p>');
   if (details.sample < 2) return box(title + '<p>Comparison opens after two players finish.</p>');
   const binCount = 14;
   const binSize = MAX_SCORE / binCount;
   const bins = Array(binCount).fill(0);
   for (const bucket of details.distribution) bins[Math.min(binCount - 1, Math.floor(bucket.score / binSize))] += bucket.count;
   const peak = Math.max(...bins, 1);
-  const bars = bins.map((count, index) => '<i style="height:' + (100 * count / peak) + '%" title="' + (index * binSize) + '-' +
-    ((index + 1) * binSize - (index === binCount - 1 ? 0 : 1)) + ' points � ' + n(count) + ' dives"></i>').join('');
+  const bars = bins.map((count, index) => '<i style="height:' + (100 * count / peak) + '%" title="' + (index * binSize) + '–' +
+    ((index + 1) * binSize - (index === binCount - 1 ? 0 : 1)) + ' points · ' + n(count) + ' dives"></i>').join('');
   return box(title + '<p>Percentile <strong>' + details.percentile + '</strong> across ' + n(details.sample) + ' dives.</p>' +
     '<div class="score-histogram" aria-label="Score distribution, your score ' + score + '" role="img">' + bars +
-    '<span class="score-pin" style="--you:' + (100 * score / MAX_SCORE) + '%"></span></div><div class="histogram-axis"><span>0</span><span>You � ' +
+    '<span class="score-pin" style="--you:' + (100 * score / MAX_SCORE) + '%"></span></div><div class="histogram-axis"><span>0</span><span>You · ' +
     score + '</span><span>' + MAX_SCORE + '</span></div>');
 }
 export function feedbackForm(kind, gameId = '') {
