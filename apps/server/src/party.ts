@@ -368,7 +368,7 @@ export function installParty(server: HttpServer, clock: () => number = Date.now)
       }
       const { canonical, points, tier } = result.answer;
       room.used.add(normalizeAnswer(canonical));
-      room.state.answers.push({ answer: canonical, points, name: player.name, tier });
+      room.state.answers.push({ playerId: player.id, answer: canonical, points, name: player.name, tier });
       player.progress += points;
       const oldHearts = player.hearts;
       while (player.progress >= room.state.settings.heartPoints && player.hearts < room.state.settings.maxHearts) {

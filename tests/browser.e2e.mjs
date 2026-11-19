@@ -79,17 +79,19 @@ test('two browser contexts join by invitation, get ready, and receive the same r
   const code = (await host.page.locator('.room-title .tag').first().textContent()).trim();
   assert.match(code, /^[A-Z]{4}$/);
   await guest.page.goto(base + '/party?room=' + code);
-  await guest.page.getByRole('button', { name: 'I’m ready' }).click();
+  await guest.page.getByRole('button', { name: 'I'm ready' }).click();
   await host.page.getByRole('button', { name: 'Start game' }).click();
   await assertVisible(host.page.getByText('You hold the puffer!', { exact: true }));
   await assertVisible(guest.page.getByRole('heading', { name: /animal that lives in the ocean/i }));
   await host.page.getByLabel('Your answer').fill('Chair');
   await host.page.getByRole('button', { name: 'Pass puffer' }).click();
-  await assertVisible(host.page.getByRole('alert').getByText(/isn’t in this category/));
+  await assertVisible(host.page.getByRole('alert').getByText(/isn't in this category/));
   await host.page.getByLabel('Your answer').fill('Shark');
   await host.page.getByRole('button', { name: 'Pass puffer' }).click();
   await assertVisible(host.page.locator('.used-answers').getByText('Shark', { exact: true }));
   await assertVisible(guest.page.locator('.used-answers').getByText('Shark', { exact: true }));
+  await assertVisible(guest.page.locator('.relay-seats').getByText('Shark', { exact: true }));
+  assert.equal(await guest.page.locator('.relay-seat[aria-current="true"]').count(), 1);
   await assertVisible(guest.page.getByText('You hold the puffer!', { exact: true }));
   await guest.page.reload();
   await assertVisible(guest.page.getByText('You hold the puffer!', { exact: true }));
@@ -117,7 +119,8 @@ test('Daily Dive completes in a browser, survives refresh, and exposes results, 
     await assertVisible(page.getByRole('heading', { name: prompt.prompt, exact: true }));
     await page.getByLabel('Your answer').fill(prompt.acceptedAnswers.at(-1).canonical);
     await page.getByRole('button', { name: 'Submit', exact: true }).click();
-    if (i < 6) await page.getByRole('button', { name: 'Next question' }).click();
+    await assertVisible(page.locator('.reveal-console').getByText(prompt.acceptedAnswers.at(-1).canonical, { exact: true }));
+    if (i > 0 && i < 6) await page.getByRole('button', { name: 'Next question' }).click();
   }
   await assertVisible(page.getByRole('heading', { name: 'Dive complete' }));
   assert.equal(await page.locator('.responses li').count(), 7);
@@ -130,7 +133,7 @@ test('Daily Dive completes in a browser, survives refresh, and exposes results, 
   await page.getByRole('link', { name: /Words & Language/ }).click();
   assert.equal(await page.getByRole('button', { name: /^Play chapter / }).count(), 30);
   await page.getByRole('button', { name: 'Play chapter 30', exact: true }).click();
-  await assertVisible(page.getByText('Words & Language · Chapter 30', { exact: true }));
+  await assertVisible(page.getByText('Words & Language � Chapter 30', { exact: true }));
   await page.getByRole('navigation').getByRole('link', { name: 'Settings' }).click();
   const setting = page.getByRole('switch', { name: /colorblind/i });
   const saved = page.waitForResponse(response => response.url().endsWith('/api/settings') && response.request().method() === 'PATCH');

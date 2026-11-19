@@ -1,0 +1,31 @@
+name: Reef Relay checks
+
+on:
+  push:
+    branches: [reef-relay]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+      - run: npm ci --no-audit --no-fund
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - name: Check Codespaces startup
+        run: |
+          bash .devcontainer/start-game.sh
+          curl --fail --silent http://127.0.0.1:5173/api/health
+          bash .devcontainer/start-game.sh
+      - run: npm install --no-save --package-lock=false playwright@1
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e

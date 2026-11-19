@@ -79,10 +79,20 @@ test('real party sockets cover host, ready, pass, duplicate, reconnect, fuse exp
   const hostCookie = createIdentity('Host');
   const guestCookie = createIdentity('Guest');
   const thirdCookie = createIdentity('Third');
-  const a = await openClient(port, hostCookie);
-  let b = await openClient(port, guestCookie);
-  const c = await openClient(port, thirdCookie);
-  t.after(() => { a.close(); b.close(); c.close(); party.shutdown(); server.close(); });
+  const clients = new Set<ClientSocket>();
+  t.after(() => {
+    for (const client of clients) client.close();
+    party.shutdown();
+    server.close();
+  });
+  async function joinSocket(cookie: string) {
+    const client = await openClient(port, cookie);
+    clients.add(client);
+    return client;
+  }
+  const a = await joinSocket(hostCookie);
+  let b = await joinSocket(guestCookie);
+  const c = await joinSocket(thirdCookie);
   assert.equal((await a.send('room:create', { ...DEFAULT_PARTY, name: 'Test waters', fuseMin: 10, fuseMax: 10, startingHearts: 1, heartPoints: 10, capacity: 2 })).ok, true);
   const code = a.state()!.code;
   await until(() => b.rooms()[0]?.code === code);
@@ -105,12 +115,13 @@ test('real party sockets cover host, ready, pass, duplicate, reconnect, fuse exp
   assert.equal(simultaneous.filter(reply => reply.ok).length, 1);
   await until(() => b.state()?.holderId === 'Guest');
   assert.equal(a.state()?.answers.length, 1);
+  assert.equal(b.state()?.answers[0].playerId, 'Host');
   assert.equal(a.state()?.players[0].hearts, 2);
   assert.equal(a.state()?.players[0].progress, 0);
   assert.equal((await b.send('answer:submit', { turn: b.state()!.turn, answer: 'SHARK!' })).error, 'That answer was already used.');
   b.close();
   await until(() => a.state()?.players[1].connected === false);
-  b = await openClient(port, guestCookie);
+  b = await joinSocket(guestCookie);
   await until(() => b.state()?.players[1].connected === true);
   assert.equal(b.state()?.holderId, 'Guest');
   now += 3900;

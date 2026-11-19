@@ -7,9 +7,10 @@ import { partyView } from './party-view.js';
 import { connectParty } from './party-client.js';
 
 const root = document.querySelector('#root');
+const REVEAL_MS = 3200;
 const state = {
   boot: null, route: 'home', bootError: '', error: '', menu: false, records: null,
-  accountTab: 'register', queueSize: '2', rooms: [], stats: null,
+  accountTab: 'register', queueSize: '2', rooms: [], stats: null, autoAdvance: true,
 };
 let generation = 0;
 let party;
@@ -20,6 +21,8 @@ let toastTimer;
 let audio;
 let lastPartyEvent = 0;
 let sidebarKey = '';
+let advanceTimer;
+let advanceRequest;
 
 async function api(path, { method = 'GET', body, token } = {}) {
   const headers = body === undefined ? {} : { 'Content-Type': 'application/json' };
@@ -50,7 +53,7 @@ function renderHeader() {
   const sound = p?.settings.sound ?? true;
   header.innerHTML = '<div class="topbar-wrap"><div class="brand-group">' +
     btn('menu', 'Menu', 'icon-button menu-toggle', state.menu ? 'close' : 'menu', 'aria-label="Navigation menu" aria-expanded="' + state.menu + '" aria-controls="sidebar"') +
-    '<a href="/" class="brand" aria-label="Abyssal home"><img src="/public/mark.svg" alt="" width="42" height="42" /><span>ABYSSAL<small>UNDERWATER TRIVIA ARCADE</small></span></a></div>' +
+    '<a href="/" class="brand" aria-label="Reef Relay home"><img src="/public/mark.svg" alt="" width="42" height="42" /><span>Reef Relay</span></a></div>' +
     '<div class="header-right">' + btn('sound', sound ? 'Mute sound' : 'Enable sound', 'icon-button sound-toggle', sound ? 'volume' : 'mute',
       'aria-label="' + (sound ? 'Mute sound' : 'Enable sound') + '" title="' + (sound ? 'Mute sound' : 'Enable sound') + '"' + (p ? '' : ' disabled')) +
     '<a href="/account" class="player-chip" aria-label="My Profile">' + avatar(p?.avatar) + '<span>' + esc(p?.registered ? p.name : 'Guest diver') + '</span>' + icon('down', 14) + '</a></div></div>';
@@ -125,9 +128,12 @@ async function route(scroll = false) {
   const token = ++generation;
   const path = location.pathname.replace(/\/$/, '') || '/';
   const view = identifyRoute(path);
+  clearTimeout(advanceTimer);
+  advanceRequest = undefined;
   if (party) { party.close(); party = null; }
   Object.assign(state, { route: view, error: '', menu: false, records: null, clearDelete: false, confirmDelete: false, inviteAttempted: false,
-    friends: null, room: null, rooms: [], queue: null, online: false, hostForm: false, dive: null, unlocks: [], stats: null, admin: null, adminToken: '', adminQuestion: null });
+    friends: null, room: null, rooms: [], queue: null, online: false, hostForm: false, partyMotion: null,
+    dive: null, finalReveal: false, unlocks: [], stats: null, admin: null, adminToken: '', adminQuestion: null });
   synced = null;
   syncing = null;
   renderHeader();
@@ -171,18 +177,57 @@ async function route(scroll = false) {
 }
 async function init() {
   try { setBootstrap(await api('/bootstrap')); state.bootError = ''; }
-  catch (err) { state.bootError = 'Couldn’t connect to Abyssal. ' + err.message; }
+  catch (err) { state.bootError = 'Couldn't connect to Reef Relay. ' + err.message; }
   await route();
 }
 function setDive(dive, focus = false) {
   const previous = state.dive;
   state.dive = dive;
-  state.descentFrom = previous && previous.score < dive.score && dive.status === 'reveal' ? previous.score : null;
+  const changed = !previous || previous.current !== dive.current || previous.status !== dive.status;
+  if (changed) {
+    state.finalReveal = dive.status === 'finished' && previous?.status === 'answer';
+    state.descentFrom = previous?.score ?? dive.score;
+  }
   synced = { server: dive.now, client: performance.now() };
-  const changed = previous && (previous.current !== dive.current || previous.status !== dive.status);
-  const selector = dive.status === 'answer' ? '#dive-answer' : dive.status === 'reveal' ? '[data-action="next"]' : '';
+  state.promptEntering = changed && dive.status === 'answer';
+  const selector = dive.status === 'answer' ? '#dive-answer' :
+    dive.status === 'reveal' || state.finalReveal ? '[data-action="next"]' : '#dive-complete';
   draw({ focus: focus ? selector : '', preserve: !changed });
-  if (dive.status === 'finished' && (!previous || previous.status !== 'finished')) void finishDive(dive);
+  state.promptEntering = false;
+  if (changed) scheduleAdvance();
+  if (dive.status === 'finished' && changed) void finishDive(dive);
+}
+function scheduleAdvance() {
+  clearTimeout(advanceTimer);
+  const enabled = state.autoAdvance && !document.hidden && (state.finalReveal || state.dive?.status === 'reveal');
+  const sweep = document.querySelector('.reveal-sweep');
+  if (sweep) {
+    sweep.hidden = !enabled;
+    if (enabled) sweep.firstElementChild.replaceWith(sweep.firstElementChild.cloneNode());
+  }
+  if (!enabled) return;
+  advanceTimer = setTimeout(() => advanceDive().catch(err => toast(err.message, true)), REVEAL_MS);
+}
+async function advanceDive() {
+  const dive = state.dive;
+  if (!dive || advanceRequest) return;
+  clearTimeout(advanceTimer);
+  if (state.finalReveal) {
+    state.finalReveal = false;
+    draw({ focus: '#dive-complete' });
+    return;
+  }
+  if (dive.status !== 'reveal') return;
+  const token = generation;
+  advanceRequest = dive;
+  try {
+    const next = await send('/dives/' + dive.id + '/next', { round: dive.current });
+    if (token !== generation) return;
+    state.error = '';
+    setDive(next, true);
+  } finally {
+    if (advanceRequest === dive) advanceRequest = undefined;
+  }
 }
 async function finishDive(dive) {
   const token = generation;
@@ -193,7 +238,7 @@ async function finishDive(dive) {
     setBootstrap(boot);
     state.stats = stats;
     state.unlocks = boot.profile.unlocked.filter(id => !old.includes(id));
-    draw();
+    if (!state.finalReveal) draw();
     if (state.unlocks.length) { audioEffect('heart'); toast('New companion unlocked!'); }
   } catch (err) {
     if (token === generation) toast(err.message, true);
@@ -235,13 +280,18 @@ function connection(token) {
         state.inviteAttempted = true;
         void party.send('room:join', { code: state.inviteCode }).catch(err => { state.error = err.message; draw(); });
       }
-    } else if (event === 'rooms:list') state.rooms = value;
+    } else if (event === 'rooms:list') {
+      state.rooms = value;
+      if (state.room) return;
+    }
     else if (event === 'queue:update') {
       if (JSON.stringify(state.queue) === JSON.stringify(value)) return;
       state.queue = value;
     } else if (event === 'room:update') {
       const previous = state.room;
       if (previous?.turn !== value?.turn) state.error = '';
+      state.partyMotion = previous?.id === value?.id && previous?.turn !== value?.turn
+        ? { from: previous.holderId, event: value.event?.kind } : null;
       state.room = value;
       if (value?.event && lastPartyEvent !== value.event.id) {
         lastPartyEvent = value.event.id;
@@ -252,6 +302,7 @@ function connection(token) {
       }
       const becameHolder = value?.holderId === state.boot.profile.id && previous?.turn !== value.turn;
       draw({ focus: becameHolder ? '#party-answer' : '' });
+      state.partyMotion = null;
       return;
     } else return;
     draw();
@@ -337,12 +388,19 @@ const actions = {
   reload: () => init(),
   sound: () => savePrefs({ sound: !state.boot.profile.settings.sound }),
   begin: async el => { const dive = await send('/dives', { mode: el.dataset.mode, target: el.dataset.key }); go('/dive/' + dive.id); },
-  next: async () => { state.error = ''; setDive(await send('/dives/' + state.dive.id + '/next', { round: state.dive.current }), true); },
+  next: advanceDive,
+  'auto-advance': () => {
+    state.autoAdvance = !state.autoAdvance;
+    const control = document.querySelector('[data-action="auto-advance"]');
+    control.setAttribute('aria-pressed', String(state.autoAdvance));
+    control.querySelector('span').textContent = state.autoAdvance ? 'Auto-next on' : 'Auto-next off';
+    scheduleAdvance();
+  },
   'copy-result': () => copy(shareResult(state.dive), 'Results copied'),
   'share-result': async () => {
     const text = shareResult(state.dive);
     if (!navigator.share) return copy(text, 'Results copied to share');
-    try { await navigator.share({ title: 'Abyssal dive results', text }); }
+    try { await navigator.share({ title: 'Reef Relay dive results', text }); }
     catch (err) { if (err.name !== 'AbortError') return copy(text, 'Results copied to share'); }
   },
   'month-prev': () => monthMove(-1),
@@ -437,7 +495,7 @@ const forms = {
 root.innerHTML = '<a href="#main" class="skip-link">Skip to content</a><header class="topbar" id="header"></header>' +
   '<div class="layout"><button type="button" class="drawer-shade" data-action="menu" aria-label="Close navigation"></button>' +
   '<aside class="sidebar" id="sidebar"></aside><main id="main" tabindex="-1"></main></div>' +
-  '<footer><span>Abyssal</span><a href="/about">About & Privacy</a></footer><div class="toast hidden" id="toast" role="status" aria-live="polite"></div>';
+  '<footer><span>Reef Relay</span><a href="/about">About & Privacy</a></footer><div class="toast hidden" id="toast" role="status" aria-live="polite"></div>';
 root.addEventListener('click', async event => {
   const el = event.target.closest('[data-action]');
   const link = event.target.closest('a');
@@ -487,7 +545,10 @@ window.addEventListener('keydown', event => {
     document.querySelector('.menu-toggle')?.focus();
   }
 });
-window.addEventListener('visibilitychange', () => { if (!document.hidden) tick(); });
+document.addEventListener('visibilitychange', () => {
+  scheduleAdvance();
+  if (!document.hidden) tick();
+});
 setInterval(tick, 120);
 renderHeader();
 draw();

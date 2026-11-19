@@ -57,8 +57,10 @@ export const empty = (headline, copy, glyph = 'waves') =>
   '<div class="empty">' + icon(glyph, 27) + '<strong>' + headline + '</strong><p>' + copy + '</p></div>';
 export const error = message => '<p class="form-error" role="alert" data-error' + (message ? '' : ' hidden') + '>' + esc(message) + '</p>';
 export const tag = (text, css = '') => '<span class="tag ' + css + '">' + esc(text) + '</span>';
-export const loading = () => '<div class="empty loading" role="status"><span class="spinner"></span><strong>Loading…</strong></div>';
-export const badge = tier => tier ? '<span class="rarity rarity-' + TIER_NAMES.indexOf(tier) + '"><i></i>' + esc(tier) + '</span>' : '<span class="rarity zero"><i></i>Timed out</span>';
+export const loading = () => '<div class="empty loading" role="status"><span class="spinner"></span><strong>Loading.</strong></div>';
+const rarityLabels = ['Tidepool', 'Sandbar', 'Reef', 'Shelf', 'Slope', 'Trench'];
+export const rarityName = tier => rarityLabels[TIER_NAMES.indexOf(tier)] ?? 'Timed out';
+export const badge = tier => tier ? '<span class="rarity rarity-' + TIER_NAMES.indexOf(tier) + '"><i></i>' + rarityName(tier) + '</span>' : '<span class="rarity zero"><i></i>Timed out</span>';
 export const diveAttrs = (mode, key = '') => 'data-mode="' + mode + '" data-key="' + esc(key) + '"';
 export const puffer = (classes = '') => '<svg class="puffer-art ' + classes + '" viewBox="0 0 140 120" role="img" aria-label="Pufferfish">' +
   '<path d="M30 55 11 48l5 14-5 16 22-9m70-12 21-8-5 15 4 14-23-8" fill="#c67666" stroke="#502f3a" stroke-width="3"/>' +
@@ -83,7 +85,7 @@ export function avatar(id, cls = '') {
 }
 
 export const NAV = [
-  ['GAME MODES', [['/', 'Daily Dive', 'daily'], ['/unlimited/classic', 'Unlimited', 'infinity'], ['/party', 'Puffer Party', 'party'], ['/archive', 'Archive', 'archive'], ['/packs', 'Themed Packs', 'packs']]],
+  ['PLAY', [['/', 'Daily Descent', 'daily'], ['/unlimited/classic', 'Unlimited', 'infinity'], ['/party', 'Puffer Relay', 'party'], ['/archive', 'Archive', 'archive'], ['/packs', 'Themed Packs', 'packs']]],
   ['DIVER LOG', [['/account', 'My Profile', 'profile'], ['/friends', 'Friends', 'friends'], ['/settings', 'Settings', 'settings']]],
   ['SUPPORT', [['/faq', 'How to Play', 'help'], ['/about', 'About & Privacy', 'about']]],
 ];
@@ -94,5 +96,5 @@ export const calendarDays = month => {
 };
 export const rarityGuide = () => '<div class="rarity-guide">' + Object.entries(TIERS).map(([tier, points]) => '<div>' + badge(tier) + '<strong>' + points + ' pts</strong></div>').join('') + '</div>';
 export function historyTable(runs, limit = 15) {
-  return runs.length ? '<ul class="history">' + runs.slice(0, limit).map(run => '<li><a href="/dive/' + run.id + '"><span><strong>' + esc(run.label) + '</strong><small>' + esc(run.mode[0].toUpperCase() + run.mode.slice(1)) + ' · ' + new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', timeZone: 'America/New_York' }).format(run.completedAt) + '</small></span><b>' + n(run.score) + '<small> pts</small></b>' + icon('right', 15) + '</a></li>').join('') + '</ul>' : empty('No dives logged yet', 'Finish a dive and it will appear here.', 'list');
+  return runs.length ? '<ul class="history">' + runs.slice(0, limit).map(run => '<li><a href="/dive/' + run.id + '"><span><strong>' + esc(run.label) + '</strong><small>' + esc(run.mode[0].toUpperCase() + run.mode.slice(1)) + ' � ' + new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', timeZone: 'America/New_York' }).format(run.completedAt) + '</small></span><b>' + n(run.score) + '<small> pts</small></b>' + icon('right', 15) + '</a></li>').join('') + '</ul>' : empty('No dives logged yet', 'Finish a dive and it will appear here.', 'list');
 }

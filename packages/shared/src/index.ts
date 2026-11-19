@@ -3,7 +3,7 @@ export const TIERS = {
 } as const;
 export type RarityTier = keyof typeof TIERS;
 export const TIER_NAMES = Object.keys(TIERS) as RarityTier[];
-export const TIER_ICONS = ['🟦', '🟩', '🟨', '🟧', '🟪', '🟥'];
+export const TIER_ICONS = ['??', '??', '??', '??', '??', '??'];
 export const ROUND_COUNT = 7;
 export const ROUND_MS = 25_000;
 export const MAX_SCORE = 700;
@@ -59,6 +59,7 @@ export const PACKS = {
   movies: { name: 'At the Movies', category: 'Movies', description: 'Explore film history, memorable casts, and the people behind the camera.', color: 'rose' },
   sports: { name: 'Sports', category: 'Sports', description: 'Go beyond the scoreboard with teams, athletes, and sporting history.', color: 'gold' },
   geography: { name: 'Geography', category: 'Geography', description: 'Cross borders and oceans to find a less obvious answer.', color: 'mint' },
+  music: { name: 'Music', category: 'Music', description: 'Play through instruments, musicians, and the history of recorded sound.', color: 'gold' },
 } as const;
 export type Pack = keyof typeof PACKS;
 export const AVATARS = [
@@ -95,7 +96,7 @@ export interface PartyPlayer {
 export interface PartyState {
   id: string; code: string; settings: PartySettings; hostId: string; status: 'lobby' | 'playing' | 'finished';
   players: PartyPlayer[]; holderId?: string; winnerId?: string; prompt?: string; round: number;
-  answers: { answer: string; name: string; points: number; tier: RarityTier }[];
+  answers: { playerId: string; answer: string; name: string; points: number; tier: RarityTier }[];
   mood: 'calm' | 'tense' | 'critical'; now: number; turn: number; rated: boolean;
   event?: { kind: 'pass' | 'heart' | 'pop' | 'eliminated' | 'win'; text: string; id: number };
 }
@@ -127,7 +128,7 @@ export interface PartyServerEvents {
 
 export function normalizeAnswer(value: string) {
   return value.normalize('NFKD').toLowerCase().replace(/\p{M}/gu, '')
-    .replace(/\+/g, ' plus ').replace(/#/g, ' sharp ').replace(/[’‘'`]/g, '').replace(/[.](?=\p{L})/gu, '').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+    .replace(/\+/g, ' plus ').replace(/#/g, ' sharp ').replace(/['`'`]/g, '').replace(/[.](?=\p{L})/gu, '').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
 }
 function editDistance(a: string, b: string): number {
   const rows = Array.from({ length: a.length + 1 }, (_, i) => [i]);

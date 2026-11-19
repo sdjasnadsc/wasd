@@ -1,6 +1,6 @@
-# Abyssal
+# Reef Relay
 
-Abyssal is an original, unofficial underwater trivia arcade inspired by Krillion.io. Find unusual answers, descend through seven trivia rounds, or pass a live pufferfish around a multiplayer room. The application includes original vector art and a curated bank of 157 prompts.
+Reef Relay is a seven-round underwater trivia arcade with original illustrations and a live multiplayer category game. Solve prompts for depth in Daily Descent or pass the puffer before its hidden fuse goes off.
 
 ## Run locally
 
@@ -15,19 +15,13 @@ Open **http://localhost:5173**. The Node process serves the frontend, API, and m
 
 ## Run from a Chromebook with GitHub Codespaces
 
-Open the project’s GitHub repository in Chrome and select **Code → Codespaces → Create codespace**. The project’s dev container supplies Node 24, installs the dependencies, and forwards port 5173.
+Open the project’s GitHub repository in Chrome and select **Code → Codespaces → Create codespace**. Select the **reef-relay** branch or use the [Reef Relay Codespaces link](https://codespaces.new/sdjasnadsc/wasd/tree/reef-relay). The dev container installs the dependencies and starts the game automatically.
 
-In the Codespace terminal, run
-
-```sh
-npm run dev
-```
-
-Open the **Ports** tab and click the forwarded address beside **Abyssal (5173)**. Leave the port private for solo play. For multiplayer, set **Port Visibility → Public** on port 5173 if your GitHub organization permits it, then share a room invitation from the forwarded game page. Use the default HTTP port protocol between Codespaces and the app. The browser-facing link uses HTTPS.
+Open the **Ports** tab and click **Reef Relay (5173)**. To restart the server manually after stopping it, run `npm run dev` from the repository root. Leave the port private for solo play. For multiplayer, set **Port Visibility → Public** on port 5173 if your GitHub organization permits it, then share a room invitation from the forwarded game page. Use the default HTTP port protocol between Codespaces and the app. The browser-facing link uses HTTPS.
 
 The game is available while the Codespace and server are running. Stopping the Codespace ends active rooms. Saved progress stays in the Codespace’s SQLite file, so reopen the same Codespace to keep it. Deleting the Codespace clears that storage. See [GitHub’s port forwarding guide](https://docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace) and [Codespace lifecycle guide](https://docs.github.com/en/codespaces/about-codespaces/understanding-the-codespace-lifecycle).
 
-## Play Puffer Party with two browsers
+## Play Puffer Relay with two browsers
 
 1. Open `http://localhost:5173/party` in one browser and in a private window or a second browser profile. Each browser profile has its own guest identity.
 2. In the host browser, select **Room settings**, choose a capacity, and select **Create room**.
@@ -79,8 +73,8 @@ vendor/                   Offline WebSocket dependencies and their licenses
 ## Trivia, records, and administration
 
 - Daily Dives reset at midnight in America/New_York. Unfinished official dives close at the reset. Completed results remain available in the profile and archive.
-- Each started round keeps a server-side deadline. An accepted answer or timeout records one response. The next deadline begins when the player selects **Next question**.
-- The archive contains deterministic daily sets from January 1, 2024. Archive replays, Unlimited, and themed chapters keep their own records. All 30 chapters in each active pack are playable. Music is marked coming soon.
+- Each started round keeps a server-side deadline. An accepted answer or timeout records one response. The next deadline begins when the reveal ends or the player selects **Next question**. Toggle **Auto-next** to read the reveal at your own pace.
+- The archive contains deterministic daily sets from January 1, 2024. Archive replays, Unlimited, and themed chapters keep their own records. Each of the five themed packs has 30 playable chapters, including Music.
 - Friends can see a score once both players finish that day’s official dive. Answer sharing is a separate opt-in setting.
 - Set `ADMIN_TOKEN` to a random value of at least 24 characters to open `/admin`. Use it to review private feedback or edit question data. A question edit affects future sets. Previously generated daily, archive, chapter, and active-run sets use their saved snapshots.
 - The portable seed bank is in `apps/server/src/bank.ts`. Each row has a prompt and a comma-delimited list of distinct canonical answers. A tilde adds an alias. The list orders answers from accessible to obscure, which assigns one of the six rarity tiers. Preserve existing row order to keep IDs stable. Use the admin interface to assign tiers explicitly. These are curated rarity scores.
@@ -119,4 +113,4 @@ For multiple instances, move identity, history, and ratings to a shared database
 
 ## Implementation notes
 
-The local build uses browser-native JavaScript, CSS, and SVG, with a TypeScript Node server, prepared SQLite statements, and a vendored RFC 6455 WebSocket driver. The original package registry returned HTTP 503 in the build environment. This version replaces React, Vite, Express, Drizzle, Zod, Socket.IO, and Vitest with the portable implementations described above. The TypeScript compatibility check verifies syntax and runtime stripping. It does not run the TypeScript semantic compiler.
+The local build uses browser-native JavaScript, CSS, and SVG, with a TypeScript Node server, prepared SQLite statements, and a vendored RFC 6455 WebSocket driver. The TypeScript check verifies syntax and compatibility with Node’s native type stripping.
