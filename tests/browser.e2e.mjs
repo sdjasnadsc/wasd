@@ -192,8 +192,9 @@ test('mobile navigation opens without horizontal overflow', { timeout: 12_000 },
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
   if (process.env.QA_CAPTURE_DIR) await page.screenshot({ path: join(process.env.QA_CAPTURE_DIR, 'abyssal-mobile.png'), fullPage: true });
   await page.getByRole('button', { name: 'Navigation menu' }).click();
-  await page.getByRole('navigation').getByRole('link', { name: 'Puffer Party' }).click();
-  await assertVisible(page.getByRole('heading', { name: 'Puffer Party', exact: true }));
+  await page.getByRole('navigation').getByRole('link', { name: 'Puffer Relay' }).click();
+  await assertVisible(page.getByRole('heading', { name: 'Puffer Relay', exact: true }));
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
   assert.equal(await page.getByRole('button', { name: 'Navigation menu' }).getAttribute('aria-expanded'), 'false');
   assert.deepEqual(errors, []);
 });
