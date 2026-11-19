@@ -1,0 +1,28 @@
+{
+  "name": "abyssal-trivia",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "dev": "node --env-file-if-exists=.env --watch apps/server/src/index.ts",
+    "start": "node --env-file-if-exists=.env apps/server/src/index.ts --production",
+    "build": "node scripts/build.mjs",
+    "typecheck": "node scripts/check.mjs",
+    "test": "node --test --test-concurrency=1 tests/*.test.ts",
+    "test:e2e": "node --test tests/*.e2e.mjs",
+    "seed": "node --env-file-if-exists=.env apps/server/src/seed.ts"
+  },
+  "dependencies": {
+    "websocket-driver": "file:vendor/websocket-driver",
+    "websocket-extensions": "file:vendor/websocket-extensions",
+    "safe-buffer": "file:vendor/safe-buffer",
+    "http-parser-js": "file:vendor/http-parser-js"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "Abyssal",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:24-bookworm",
+  "postCreateCommand": "npm ci",
+  "forwardPorts": [5173],
+  "portsAttributes": {
+    "5173": {
+      "label": "Abyssal",
+      "onAutoForward": "notify"
+    }
+  },
+  "remoteEnv": {
+    "COOKIE_SECURE": "true"
+  }
+}
